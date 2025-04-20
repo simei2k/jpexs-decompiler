@@ -30,13 +30,11 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import org.doubletype.ossa.Engine;
 import org.doubletype.ossa.OutOfRangeException;
 import org.doubletype.ossa.adapter.EContour;
@@ -91,20 +89,13 @@ public class Fontastic {
     }
 
     private static File createTempDirectory()
-            throws IOException {
-        File temp;
-        temp = File.createTempFile("temp", Long.toString(System.nanoTime()));
-
-        if (!(temp.delete())) {
-            throw new IOException("Could not delete temp file: " + temp.getAbsolutePath());
-        }
-
-        if (!(temp.mkdirs())) {
-            throw new IOException("Could not create temp directory: " + temp.getAbsolutePath());
-        }
-
-        return (temp);
-    }
+        throws IOException {
+    File temp;
+    
+    temp = Files.createTempDirectory("temp" + Long.toString(System.nanoTime())).toFile();
+    
+    return (temp);
+}
 
     /**
      * Creates and initialises a new typeface. Font data is put into sketch
